@@ -1,0 +1,562 @@
+connect.php
+_________________________________________________________________________________________________________________________
+<?php	
+	$db=mysqli_connect("localhost", "root","")  or die ("Could not connect to database"); 
+	
+	mysqli_select_db($db,'blooddonationsystem') or die('Error selecting database : ' . mysql_error());
+    
+//var_dump ($query);
+?>
+_________________________________________________________________________________________________________________________
+
+
+
+
+home.php
+_________________________________________________________________________________________________________________________
+<html>
+    <head>
+        <title>Blood Donation</title>
+        <link rel="icon" type="image/jpg" href="final.jpeg">
+        <link rel="stylesheet" href="design.css"> 
+        <div id="fixed">
+            <div id="topline">
+                <img id="logo" src="final.jpeg" alt='' />
+                <header><h1>Blood Donations</h1></header>
+                <sign id="login">Login</sign>
+            </div>   
+         </div>
+            <nav id="links">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#recipients">Donor</a></li>
+                    <li><a href="#donors">Recipient</a></li>
+                    <li><a href="#bloodbank">Blood Bank</a></li>
+                </ul>
+            </nav>
+    </head>
+    <body>
+    </body>
+</html>
+_________________________________________________________________________________________________________________________
+
+
+
+
+type.php
+_________________________________________________________________________________________________________________________
+<!DOCTYPE HTML> 
+<html>
+    <head>
+<title>type</title>
+    </head>
+    
+<body>
+<td>Type</td><br>
+			
+		<a href ="donor%20registration.html"> <button name="register as Donor">Register as donor</button></a><br>
+        <a href="reciepient%20registration.html"><button>Register as Recipient</button></a>
+			</td> 
+    
+</body>
+</html>
+_________________________________________________________________________________________________________________________
+
+
+
+database
+_________________________________________________________________________________________________________________________
+-- phpMyAdmin SQL Dump
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Sep 19, 2017 at 10:59 AM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.0.22
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `blooddonationsystem`
+--
+CREATE DATABASE IF NOT EXISTS `blooddonationsystem` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `blooddonationsystem`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `administrator`
+--
+
+CREATE TABLE `administrator` (
+  `user_type` varchar(255) NOT NULL,
+  `FirstName` varchar(55) NOT NULL,
+  `LastName` varchar(55) NOT NULL,
+  `EmailAdress` varchar(55) NOT NULL,
+  `Password` varchar(35) NOT NULL,
+  `PhoneNumber` int(15) NOT NULL,
+  `StaffID` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bloodbank`
+--
+
+CREATE TABLE `bloodbank` (
+  `CentreName` varchar(55) NOT NULL,
+  `Location` varchar(55) NOT NULL,
+  `BloodTypeAavailable` int(200) NOT NULL,
+  `BloodTypeBavailable` int(200) NOT NULL,
+  `BloodTypeOavailable` int(200) NOT NULL,
+  `BloodTypeABavailable` int(200) NOT NULL,
+  `bloodcentreID` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donor`
+--
+
+CREATE TABLE `donor` (
+  `FirstName` varchar(55) NOT NULL,
+  `LastName` varchar(55) NOT NULL,
+  `NationalID` int(15) NOT NULL,
+  `Password` varchar(30) NOT NULL,
+  `BloodType` varchar(10) NOT NULL,
+  `RhesusType` text NOT NULL,
+  `EmailAddress` varchar(55) NOT NULL,
+  `PhoneNumber` int(12) NOT NULL,
+  `Age` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipients`
+--
+
+CREATE TABLE `recipients` (
+  `user_type` varchar(255) NOT NULL,
+  `FirstName` varchar(55) NOT NULL,
+  `LastName` varchar(55) NOT NULL,
+  `Bloodtype` varchar(12) NOT NULL,
+  `NationalID` int(15) NOT NULL,
+  `Reason` text NOT NULL,
+  `EmailAdress` varchar(55) NOT NULL,
+  `PhoneNumber` int(15) NOT NULL,
+  `Password` varchar(35) NOT NULL,
+  `RhesusType` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `administrator`
+--
+ALTER TABLE `administrator`
+  ADD PRIMARY KEY (`StaffID`),
+  ADD UNIQUE KEY `Password` (`Password`);
+
+--
+-- Indexes for table `bloodbank`
+--
+ALTER TABLE `bloodbank`
+  ADD PRIMARY KEY (`bloodcentreID`),
+  ADD UNIQUE KEY `Location` (`Location`);
+
+--
+-- Indexes for table `donor`
+--
+ALTER TABLE `donor`
+  ADD PRIMARY KEY (`NationalID`),
+  ADD UNIQUE KEY `Password` (`Password`);
+
+--
+-- Indexes for table `recipients`
+--
+ALTER TABLE `recipients`
+  ADD PRIMARY KEY (`NationalID`),
+  ADD UNIQUE KEY `Password` (`Password`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+_________________________________________________________________________________________________________________________
+
+
+
+
+
+donor connect.php
+_________________________________________________________________________________________________________________________
+<?php 
+define('DB_HOST', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'blooddonationsystem');
+
+$db = new mysqli('localhost', 'root', '', 'blooddonationsystem') or die("Failed to connect to MySQL: " . mysql_error());  
+function NewUser() { $name = $_POST['FirstName']; 
+                    $IDNumber = $_POST['NationalID'];
+                    $password = $_POST['Password'];
+                    $BloodType = $_POST['BloodType']; 
+                    $Age = $_POST['Age'];
+                    $EmailAdress = $_POST['EmailAddress'];
+                    $PhoneNumber = $_POST['PhoneNumber'];
+                    $query = "INSERT INTO donor (FirstName,Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber) VALUES ('$name','$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber')"; 
+                    $data = mysql_query ($query)
+                        or die(mysql_error()); 
+                    if($data) { echo "YOUR REGISTRATION IS COMPLETED..."; } } 
+_________________________________________________________________________________________________________________________
+
+
+
+
+donor registration.php
+_________________________________________________________________________________________________________________________
+<!DOCTYPE HTML> 
+<html>
+    <head>
+<title>Sign-Up</title>
+    </head>
+    
+<body> 
+    
+<div id="Sign-Up"> 
+    
+<fieldset style="width:30%">
+    
+<legend>Donor Registration Form</legend>
+<table border="0"> 
+    <tr> 
+        <form method="POST" action="donor connect.php">
+            
+    <td>Name</td><td> <input type="text" name="name"></td>
+            
+    <tr> <td>National Id</td><td> <input type="int" name="IdNumber"></td> </tr>
+            
+    <tr> <td>Blood Type</td><td> <input type="text" name="BloodType"></td> </tr> 
+    <tr> <td>Age</td><td> <input type="int" name="Age"></td> </tr> 
+    <tr> <td>Email Address</td><td> <input type="text" name="EmailAddress"></td> </tr>
+    <tr> <td>Phone Number</td><td> <input type="int" name="PhoneNumber"></td> </tr> 
+    <tr> <td>Password</td><td> <input type="password" name="password"></td> </tr> 
+    <tr> <td>Confirm Password </td><td><input type="password" name="cpass"></td> </tr> 
+    <tr> <td><input id="button" type="submit" name="submit" value="Sign-Up"></td> </tr>
+                 
+        </form>
+    </table> 
+</fieldset> 
+</div>
+</body>
+</html>
+_________________________________________________________________________________________________________________________
+
+
+
+
+Login.php
+_________________________________________________________________________________________________________________________
+<html>
+    <head>
+        <title>LogIn</title>
+     <h1>Welcome to TOADAMU<br>Kindly Login.</h1>
+    </head>
+    <body>
+        <form action="Login.php" method="post">
+                Email:<br>
+                <input type="text" name="email"><br>
+                Password:<br>
+                <input required type ="password" name="password">
+                <br><br>
+               User Type:<br>
+                <input required type ="user_type" name="user type">
+                <br><br>
+                <input type="submit" value="Login">
+                <br><br>
+                
+        </form>
+    </body>
+</html>
+
+<?php
+    include 'connect.php';
+
+if(!empty($_POST))
+{
+    $email= $_POST['email'];
+    $pass= $_POST['password'];
+
+$query = "SELECT * FROM blooddonationsystem WHERE EmailAddress='$email' AND Password ='$pass'";
+    $result= mysqli_query($db,$query);
+    $row = mysqli_fetch_assoc($result);
+
+    if($row>0)
+    {
+        session_start();
+        $_SESSION['user_type']=$row['user_type'];
+        $_SESSION['staff_id'] = $row['staff_id'];
+       
+        if($row['user_type'] == "Donor" || $row['user_type'] == "donor")
+       {
+            echo("<script>alert('Login Successful')</script>");
+            echo("<script>window.location = 'Donor.php';</script>");
+       }
+        
+        else if
+        ($row['user_type'] == "Administrator" || $row['user_type'] == "administrator")
+       { 
+            
+           
+            echo("<script>alert('Login Successful')</script>");
+            echo("<script>window.location = 'Admin.php';</script>");
+
+        }
+         else ($row['user_type'] == "Recipients" || $row['user_type'] == "recipients");
+        {
+            echo("<script>alert('Login Successful')</script>");
+            echo("<script>window.location = 'Recipient.php';</script>");
+        }
+        
+    }
+    else
+    {
+        echo("<script>alert('Complete Mismatch. Account does not exists')</script>");
+        echo("<script>window.location = 'Login.php';</script>");
+    }
+}
+
+?>
+_________________________________________________________________________________________________________________________           
+
+
+
+Logout.php
+_________________________________________________________________________________________________________________________
+<?php
+	
+	session_start();
+	require 'connect.php';
+
+	//$date = date("Y-m-d H:i:s");
+	//$date = date("H:i:s");
+
+	//$upquery = mysqli_query($db,"
+	//	UPDATE blooddonationsystem
+	//	SET
+	//		`access_time` = '$date'
+	///	WHERE `email_address` = '".$_SESSION['email_address']."'
+	//");
+	
+
+	$query = mysqli_close($db);
+
+	session_unset($_SESSION['email_address']);
+	session_destroy();
+
+	echo("<script>window.location = 'Login.php';</script>");
+
+?>
+_________________________________________________________________________________________________________________________
+
+
+
+
+
+reciepient registration.php
+_________________________________________________________________________________________________________________________
+<!DOCTYPE HTML> 
+<html>
+    <head>
+<title>Sign-Up</title>
+    </head>
+    
+<body> 
+    
+<div id="Sign-Up"> 
+    
+<fieldset style="width:30%">
+    
+<legend>Recipient Registration Form</legend>
+<table border="0"> 
+    <tr> 
+        <form method="POST" action="recipient connectS.php">
+            
+    <td>Name</td><td> <input type="text" name="name"></td>
+            
+    <tr> <td>National Id</td><td> <input type="int" name="IdNumber"></td> </tr>
+            
+    <tr> <td>Blood Type</td><td> <input type="text" name="Bloodtype"></td> </tr> 
+    <tr> <td>Age</td><td> <input type="int" name="Age"></td> </tr> 
+    <tr> <td>Email Address</td><td> <input type="text" name="EmailAddres"></td> </tr>
+    <tr> <td>Phone Number</td><td> <input type="int" name="PhoneNumber"></td> </tr> 
+    <tr> <td>Password</td><td> <input type="password" name="password"></td> </tr> 
+    <tr> <td>Confirm Password </td><td><input type="password" name="cpass"></td> </tr>
+    <tr>
+    <td>Reason</td></tr>
+        <tr><td>
+        <input type="radio" name="Reason" value="Accident" <?php if(isset($_POST['Reason']) && $_POST['Reason']=="accident") { <?php  } ?> Accident <br>
+        <input type="radio" name="Reason" value="Sickness" <?php if(isset($_POST['Reason']) && $_POST['Reason']=="sickness") { <?php  } ?>Sickness<br>
+        <input type="radio" name="Reason" value="Surgery" <?php if(isset($_POST['Reason']) && $_POST['Reason']=="Surgery") { ?<?php  } ?>Surgery<br>
+        <input type="radio" name="Reason" value="Any other reason" <?php if(isset($_POST['Reason']) && $_POST['Reason']=="any other reason") { ?><?php  } ?>Any other reason<br>
+            
+        </td>
+    </tr>        
+    <tr> <td><input id="button" type="submit" name="submit" value="Sign-Up"></td> </tr>
+                 
+        </form>
+    </table> 
+</fieldset> 
+</div>
+</body>
+</html>
+_________________________________________________________________________________________________________________________
+
+
+
+
+design.css
+_________________________________________________________________________________________________________________________
+#topline
+{
+    display: -webkit-box;
+    -webkit-box-orient:horizontal;
+    -webkit-box-flex:1;
+    background-color: #BE1523;
+    margin: auto;
+    padding: inherit;
+}
+#logo
+{
+    width: 210px;
+    height: 200px;
+}
+#links
+{
+    margin: 0px;
+    padding: 0px;
+}
+h1
+{
+    color: white;
+    padding-left: 80px;
+    font: 160px Brush Script Std, Brush Script MT, cursive;
+    font-stretch: extra-expanded;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    align-content:flex-start;
+    -webkit-box-flex:1;
+}
+#login
+{
+    text-align: left;
+    padding-left: 120px;
+    font-size: 20px;
+    color: white;
+    display: -webkit-box;
+}
+ul
+{
+   display: -webkit-box;
+   -webkit-box-pack:center;
+   -webkit-box-orient:horizontal;
+   min-width: 60px;
+   list-style: none;
+}
+li
+{
+   display: block;
+   -webkit-box-flex:1;
+   font: 22px Comic Sans MS;
+   padding: 0px;
+   margin: 0px;
+   text-align: center;
+   color: #BE1523;
+   transition: 0.5s ease;
+}
+li a
+{
+   display: block;  
+   text-decoration-line: none;
+   color: #BE1523;
+   -webkit-transition:color 0.5s,font 0.5s;
+   transition: 0.5s ease;
+   border-bottom: 3px solid transparent;
+   margin: 0px;
+   /*border-left: 2px solid #BE1523;*/
+}
+li a:after
+{
+    content: '';
+	display: block;
+	margin: auto;
+	height: 3px;
+	width: 0px;
+	background: transparent;
+	transition: width .5s ease, background-color .5s ease;
+}
+li a:hover:after
+{
+   color:#BE1523;
+   width: 100%;
+   background-color: #BE1523;   
+}
+li a:focus, li a:active
+{
+   display: block;
+   width: 100%;
+   background: #BE1523;
+   color: black;
+}
+_________________________________________________________________________________________________________________________
+
+
+
+
+
+recipient connect.php
+_________________________________________________________________________________________________________________________
+<?php 
+define('DB_HOST', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'blooddonationsystem');
+
+$db = new mysqli('localhost', 'root', '', 'blooddonationsystem');
+    or die("Failed to connect to MySQL: " . mysql_error());  
+function NewUser() { $name = $_POST['FirstName']; 
+                    $IDNumber = $_POST['NationalID'];
+                    $password = $_POST['Password'];
+                    $BloodType = $_POST['BloodType']; 
+                    $Age = $_POST['Age'];
+                    $EmailAdress = $_POST['EmailAddress'];
+                    $PhoneNumber = $_POST['PhoneNumber'];
+                    $Reason = $_POST['Reason'];
+                    
+                    $query = "INSERT INTO recipients (FirstName,Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber,Reason) VALUES ('$name','$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber''$reason')"; 
+                    $data = mysql_query ($query)
+                        or die(mysql_error()); 
+                    if($data) { echo "YOUR REGISTRATION IS COMPLETED..."; } } 
+
+_________________________________________________________________________________________________________________________
+            
+
+
+
+
