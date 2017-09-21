@@ -17,21 +17,54 @@ ________________________________________________________________________________
 <html>
     <head>
         <title>Blood Donation</title>
-        <link rel="icon" type="image/jpg" href="final.jpeg">
+        <link rel="icon" type="image/jpg" href="final.jpeg"> 
         <link rel="stylesheet" href="design.css"> 
         <div id="fixed">
             <div id="topline">
                 <img id="logo" src="final.jpeg" alt='' />
                 <header><h1>Blood Donations</h1></header>
-                <sign id="login">Login</sign>
-            </div>   
+                
+                <?php
+                    session_start();
+                    if(!empty($_SESSION))
+                    {
+                        if($_SESSION['email'] <> NULL)
+                        {
+                            echo  '<nav1 style="color:black; font: 19px Times New Roman; margin:0 9px;">'  .$_SESSION['email'].  '</nav1> ';
+                ?>
+                        <form action="logout.php">
+                            <nav1 id="login"><a>Logout</a></nav1>
+                        </form>
+
+                <?php
+                        }
+                        else
+                        {
+                ?>
+                            <a href="Login.php" id="login">Login</a>
+                <?php
+                        }
+                    }
+                    else
+                    {
+                ?>
+                        <a href="Login.php" id="login">Login</a>
+                    
+                <?php
+                    }
+                ?>
+            
+                
+                
+            </div>
+            
          </div>
             <nav id="links">
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#recipients">Donor</a></li>
-                    <li><a href="#donors">Recipient</a></li>
-                    <li><a href="#bloodbank">Blood Bank</a></li>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="">Donor</a></li>
+                    <li><a href="">Recipient</a></li>
+                    <li><a href="">Blood Bank</a></li>
                 </ul>
             </nav>
     </head>
@@ -311,11 +344,12 @@ $query = "SELECT * FROM blooddonationsystem WHERE EmailAddress='$email' AND Pass
         session_start();
         $_SESSION['user_type']=$row['user_type'];
         $_SESSION['staff_id'] = $row['staff_id'];
+        $_SESSION['email'] = $row['email'];
        
         if($row['user_type'] == "Donor" || $row['user_type'] == "donor")
        {
             echo("<script>alert('Login Successful')</script>");
-            echo("<script>window.location = 'Donor.php';</script>");
+            echo("<script>window.location = 'home.php';</script>");
        }
         
         else if
@@ -330,7 +364,7 @@ $query = "SELECT * FROM blooddonationsystem WHERE EmailAddress='$email' AND Pass
          else ($row['user_type'] == "Recipients" || $row['user_type'] == "recipients");
         {
             echo("<script>alert('Login Successful')</script>");
-            echo("<script>window.location = 'Recipient.php';</script>");
+            echo("<script>window.location = 'home.php';</script>");
         }
         
     }
@@ -342,6 +376,7 @@ $query = "SELECT * FROM blooddonationsystem WHERE EmailAddress='$email' AND Pass
 }
 
 ?>
+            
 _________________________________________________________________________________________________________________________           
 
 
@@ -366,7 +401,7 @@ ________________________________________________________________________________
 
 	$query = mysqli_close($db);
 
-	session_unset($_SESSION['email_address']);
+	session_unset($_SESSION['email']);
 	session_destroy();
 
 	echo("<script>window.location = 'Login.php';</script>");
@@ -469,7 +504,8 @@ h1
     padding-left: 120px;
     font-size: 20px;
     color: white;
-    display: -webkit-box;
+    display:inline-flex;
+    float:inherit;
 }
 ul
 {
@@ -524,6 +560,7 @@ li a:focus, li a:active
    background: #BE1523;
    color: black;
 }
+
 _________________________________________________________________________________________________________________________
 
 
