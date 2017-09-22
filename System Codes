@@ -266,38 +266,164 @@ ________________________________________________________________________________
 <!DOCTYPE HTML> 
 <html>
     <head>
-<title>Sign-Up</title>
-    </head>
-    
-<body> 
-    
-<div id="Sign-Up"> 
-    
-<fieldset style="width:30%">
-    
-<legend>Donor Registration Form</legend>
-<table border="0"> 
-    <tr> 
-        <form method="POST" action="donor connect.php">
-            
-    <td>Name</td><td> <input type="text" name="name"></td>
-            
-    <tr> <td>National Id</td><td> <input type="int" name="IdNumber"></td> </tr>
-            
-    <tr> <td>Blood Type</td><td> <input type="text" name="BloodType"></td> </tr> 
-    <tr> <td>Age</td><td> <input type="int" name="Age"></td> </tr> 
-    <tr> <td>Email Address</td><td> <input type="text" name="EmailAddress"></td> </tr>
-    <tr> <td>Phone Number</td><td> <input type="int" name="PhoneNumber"></td> </tr> 
-    <tr> <td>Password</td><td> <input type="password" name="password"></td> </tr> 
-    <tr> <td>Confirm Password </td><td><input type="password" name="cpass"></td> </tr> 
-    <tr> <td><input id="button" type="submit" name="submit" value="Sign-Up"></td> </tr>
-                 
-        </form>
-    </table> 
-</fieldset> 
-</div>
-</body>
+        <title>Sign-Up</title>
+        <link rel="icon" type="image/jpg" href="final.jpeg"> 
+        <link rel="stylesheet" href="design.css"> 
+        <div id="fixed">
+            <div id="topline">
+                <img id="logo" src="final.jpeg" alt='' />
+                <header><h1>Blood Donations</h1></header>
+                
+                <?php
+                    session_start();
+                    if(!empty($_SESSION))
+                    {
+                        if($_SESSION['email'] <> NULL)
+                        {
+                            echo  '<nav1 style="color:black; font: 19px Times New Roman; margin:0 9px;">'  .$_SESSION['email'].  '</nav1> ';
+                ?>
+                        <form action="logout.php">
+                            <nav1 id="login"><a>Logout</a></nav1>
+                        </form>
+
+                <?php
+                        }
+                        else
+                        {
+                ?>
+                            <a href="Login.php" id="login">Login</a>
+                <?php
+                        }
+                    }
+                    else
+                    {
+                ?>
+                        <a href="Login.php" id="login">Login</a>
+                    
+                <?php
+                    }
+                ?>
+            </div>
+         </div>
+            <nav id="links">
+                <ul>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="">Donor</a></li>
+                    <li><a href="">Recipient</a></li>
+                    <li><a href="">Blood Bank</a></li>
+                </ul>
+            </nav>
+        </head>
+    <body> 
+        <div id="Sign-Up" style="padding-left:450px;"> 
+            <fieldset style="width:30%">
+            <legend>Donor Registration Form</legend>
+            <table border="0"> 
+                    <form method="POST" action="donor connect.php">
+                            <td id="label">Name</td>
+                            <td> 
+                                <div class="col">
+                                    <input type="text" name="name" class="textbox" placeholder="Name">
+                                    <span class="focus-border">
+                                        <i></i>
+                                    </span>
+                                </div>
+                            </td>
+                            <tr> 
+                            <td id="label">National Id</td>
+                                <td> 
+                                    <div class="col">
+                                        <input type="int" name="IdNumber" class="textbox" placeholder="National ID">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr>
+                            <tr> 
+                                <td id="label">Blood Type</td>
+                                <td> 
+                                    <div class="col">
+                                        <input type="text" name="BloodType" class="textbox" placeholder="Blood type">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr> 
+                            <tr> 
+                                <td id="label">Age</td>
+                                <td> 
+                                    <div class="col">
+                                        <input type="int" name="Age" class="textbox" placeholder="Age">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr> 
+                            <tr> 
+                                <td id="label">Email Address</td>
+                                <td> 
+                                    <div class="col">
+                                        <input type="text" name="EmailAddress" class="textbox" placeholder="Email Address">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr> 
+                                <td id="label">Phone Number</td>
+                                <td> 
+                                    <div class="col">
+                                        <input type="int" name="PhoneNumber" class="textbox" placeholder="Phone Number">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr> 
+                            <tr> 
+                                <td id="label">Password</td>
+                                <td>
+                                    <div class="col">
+                                        <input type="password" name="password" class="textbox" placeholder="Password">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr> 
+                            <tr> 
+                                <td id="label">Confirm Password </td>
+                                <td>
+                                    <div class="col">
+                                        <input type="password" name="cpass" class="textbox" placeholder="Confirm password">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr> 
+                            <tr> 
+                                <td id="label">
+                                    <div class="col">
+                                        <input id="button" type="submit" name="submit" value="Sign-Up" class="btn">
+                                        <span class="focus-border">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </td> 
+                            </tr>
+                    </form>
+            </table> 
+            </fieldset> 
+        </div>
+    </body>
 </html>
+
+
 _________________________________________________________________________________________________________________________
 
 
@@ -307,22 +433,88 @@ Login.php
 _________________________________________________________________________________________________________________________
 <html>
     <head>
-        <title>LogIn</title>
-     <h1>Welcome to TOADAMU<br>Kindly Login.</h1>
+        <title>Login</title>
+        
+        <link rel="icon" type="image/jpg" href="final.jpeg"> 
+        <link rel="stylesheet" href="design.css"> 
+        <div id="fixed">
+            <div id="topline">
+                <img id="logo" src="final.jpeg" alt='' />
+                <header><h1>Blood Donations</h1></header>
+                
+                <?php
+                    session_start();
+                    if(!empty($_SESSION))
+                    {
+                        if($_SESSION['email'] <> NULL)
+                        {
+                            echo  '<nav1 style="color:black; font: 19px Times New Roman; margin:0 9px;">'  .$_SESSION['email'].  '</nav1> ';
+                ?>
+                        <form action="logout.php">
+                            <nav1 id="login"><a>Logout</a></nav1>
+                        </form>
+
+                <?php
+                        }
+                        else
+                        {
+                ?>
+                            <a href="Login.php" id="login">Login</a>
+                <?php
+                        }
+                    }
+                    else
+                    {
+                ?>
+                        <a href="Login.php" id="login">Login</a>
+                    
+                <?php
+                    }
+                ?>
+            
+                
+                
+            </div>
+            
+         </div>
+            <nav id="links">
+                <ul>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="">Donor</a></li>
+                    <li><a href="">Recipient</a></li>
+                    <li><a href="">Blood Bank</a></li>
+                </ul>
+            </nav>
+        
     </head>
     <body>
-        <form action="Login.php" method="post">
-                Email:<br>
-                <input type="text" name="email"><br>
-                Password:<br>
-                <input required type ="password" name="password">
+        <form action="Login.php" method="post" id="form">
+                <h2>Kindly Login.</h2>
+                <p  id="label">Email:</p>
+                <div class="col">
+                    <input class="textbox" type="text" name="email" placeholder="Email">
+                    <span class="focus-border">
+                        <i></i>
+                    </span>
+                </div>
                 <br><br>
-               User Type:<br>
-                <input required type ="user_type" name="user type">
+                <p id="label">Password:</p>
+                <div class="col">
+                    <input class="textbox" type="password" name="password" placeholder="Password">
+                    <span class="focus-border">
+                        <i></i>
+                    </span>
+                </div>
                 <br><br>
-                <input type="submit" value="Login">
+                <p id="label">User Type:</p>
+                <div class="col">
+                    <input class="textbox" type="text" name="usertype" placeholder="User Type">
+                    <span class="focus-border">
+                        <i></i>
+                    </span>
+                </div>
                 <br><br>
-                
+                <input type="submit" value="Login" class="btn">
         </form>
     </body>
 </html>
@@ -376,6 +568,7 @@ $query = "SELECT * FROM blooddonationsystem WHERE EmailAddress='$email' AND Pass
 }
 
 ?>
+            
             
 _________________________________________________________________________________________________________________________           
 
@@ -475,11 +668,12 @@ ________________________________________________________________________________
     background-color: #BE1523;
     margin: auto;
     padding: inherit;
+    height: 160px;
 }
 #logo
 {
-    width: 210px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
 }
 #links
 {
@@ -560,6 +754,125 @@ li a:focus, li a:active
    background: #BE1523;
    color: black;
 }
+#form
+{
+    text-align: center;
+    align-content: center;
+}
+#label
+{
+    font: 17px Times New Roman;
+    color: black;
+}
+.col 
+{
+	margin-top: 10px;
+	display: inline-block;
+	position: relative;
+}
+
+.textbox 
+{
+	padding: 9px 4px;
+	font: 16px/24px Times New Roman;
+	color: black;
+	width: 275px;
+	box-sizing: border-box;
+	letter-spacing: 1px;
+	border: 1px solid #ccc;
+	transition: 0.4s;
+}
+
+.textbox ~ .focus-border:before,
+.textbox ~ .focus-border:after 
+{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background-color: #BE1523;
+    transition: 0.2s;
+    transition-delay: 0.2s;
+}
+.textbox ~ .focus-border:after 
+{
+    top: auto;
+    bottom: 0;
+    right: auto;
+    left: 0;
+    transition-delay: 0.6s;
+}
+.textbox ~ .focus-border i:before,
+.textbox ~ .focus-border i:after 
+{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 0;
+    background-color: #BE1523;
+    transition: 0.2s;
+}
+.textbox ~ .focus-border i:after 
+{
+    left: auto;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transition-delay: 0.4s;
+}
+.textbox:focus ~ .focus-border:before,
+.textbox:focus ~ .focus-border:after 
+{
+    width: 100%;
+    transition: 0.2s;
+    transition-delay: 0.6s;
+}
+.textbox:focus ~ .focus-border:after 
+{
+    transition-delay: 0.2s;
+}
+.textbox:focus ~ .focus-border i:before,
+.textbox:focus ~ .focus-border i:after 
+{
+    height: 100%;
+    transition: 0.2s;
+}
+.textbox:focus ~ .focus-border i:after 
+{
+    transition-delay: 0.4s;
+}
+.textbox:focus{
+	outline: none;
+}
+.btn {
+  background: #f5f5f5;
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #dde3e6);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #dde3e6);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #dde3e6);
+  background-image: -o-linear-gradient(top, #f5f5f5, #dde3e6);
+  background-image: linear-gradient(to bottom, #f5f5f5, #dde3e6);
+  -webkit-border-radius: 27;
+  -moz-border-radius: 27;
+  border-radius: 27px;
+  font-family: Georgia;
+  color: #be1523;
+  font-size: 19px;
+  padding: 7px 25px 7px 25px;
+  border-bottom: solid #666666 2px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #bfbfbf;
+  text-decoration: none;
+}
+
+
+
 
 _________________________________________________________________________________________________________________________
 
