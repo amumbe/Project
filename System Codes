@@ -87,8 +87,8 @@ ________________________________________________________________________________
 <body>
 <td>Type</td><br>
 			
-		<a href ="donor%20registration.html"> <button name="register as Donor">Register as donor</button></a><br>
-        <a href="reciepient%20registration.html"><button>Register as Recipient</button></a>
+		<a href ="donor regestration.php"> <button name="register as Donor">Register as donor</button></a><br>
+        <a href="reciepient registration.php><button name="register as recipient>Register as Recipient</button></a>
 			</td> 
     
 </body>
@@ -245,14 +245,15 @@ define('DB_PASSWORD', '');
 define('DB_NAME', 'blooddonationsystem');
 
 $db = new mysqli('localhost', 'root', '', 'blooddonationsystem') or die("Failed to connect to MySQL: " . mysql_error());  
-function NewUser() { $name = $_POST['FirstName']; 
+function NewUser() { $FirstName = $_POST['FirstName']; 
+                    $SecondName = $_POST['SecondName']; 
                     $IDNumber = $_POST['NationalID'];
                     $password = $_POST['Password'];
                     $BloodType = $_POST['BloodType']; 
                     $Age = $_POST['Age'];
                     $EmailAdress = $_POST['EmailAddress'];
                     $PhoneNumber = $_POST['PhoneNumber'];
-                    $query = "INSERT INTO donor (FirstName,Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber) VALUES ('$name','$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber')"; 
+                    $query = "INSERT INTO donor (FirstName, SecondName, Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber) VALUES ('$FirstName', '$SecondName', '$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber')"; 
                     $data = mysql_query ($query)
                         or die(mysql_error()); 
                     if($data) { echo "YOUR REGISTRATION IS COMPLETED..."; } } 
@@ -625,8 +626,8 @@ ________________________________________________________________________________
     <tr> 
         <form method="POST" action="recipient connectS.php">
             
-    <td>Name</td><td> <input type="text" name="name"></td>
-            
+    <td>First Name</td><td> <input type="text" name="FirstName"></td>
+    <tr> <td>Second Name</td><td> <input type="text" name="SecondName"></td> </tr>      
     <tr> <td>National Id</td><td> <input type="int" name="IdNumber"></td> </tr>
             
     <tr> <td>Blood Type</td><td> <input type="text" name="Bloodtype"></td> </tr> 
@@ -890,7 +891,8 @@ define('DB_NAME', 'blooddonationsystem');
 
 $db = new mysqli('localhost', 'root', '', 'blooddonationsystem');
     or die("Failed to connect to MySQL: " . mysql_error());  
-function NewUser() { $name = $_POST['FirstName']; 
+function NewUser() { $FirstName = $_POST['FirstName']; 
+                    $SecondName = $_POST['SecondName'];
                     $IDNumber = $_POST['NationalID'];
                     $password = $_POST['Password'];
                     $BloodType = $_POST['BloodType']; 
@@ -899,7 +901,7 @@ function NewUser() { $name = $_POST['FirstName'];
                     $PhoneNumber = $_POST['PhoneNumber'];
                     $Reason = $_POST['Reason'];
                     
-                    $query = "INSERT INTO recipients (FirstName,Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber,Reason) VALUES ('$name','$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber''$reason')"; 
+                    $query = "INSERT INTO recipients (FirstName,SecondName,Password,NationalID, BloodType, Age, EmailAddress, PhoneNumber,Reason) VALUES ('$FirstName','$SecondName', '$password','$IDNumber','$BloodType','$Age', '$EmailAddress','$PhoneNumber''$reason')"; 
                     $data = mysql_query ($query)
                         or die(mysql_error()); 
                     if($data) { echo "YOUR REGISTRATION IS COMPLETED..."; } } 
